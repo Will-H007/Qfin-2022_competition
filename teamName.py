@@ -12,7 +12,7 @@ def sell(df):
 #Return a list showing the average percentage change over a period from highest to lowest
 def buy_list(df, budget, start_date, end_date, concentration = 10):
     percentage_change = df[start_date:end_date].pct_change()
-    # print(df[start_date:end_date].pct_change(period = 30))
+    print(df[start_date:end_date].pct_change(periods = 30))
     average_percentage_change = percentage_change.mean()
     # plt.plot(average_percentage_change)
     # plt.show()

@@ -11,12 +11,17 @@ def read_file(filename):
     df = pd.DataFrame(df.values.reshape(250,-1)).astype(float)
     return df
 
+#Return a list showing the average percentage change over a period from highest to lowest
 def buy_list(df, budget, start_date, end_date, concentration = 10):
     percentage_change = df[start_date:end_date].pct_change()
     average_percentage_change = percentage_change.mean()
     average_percentage_change.name = "Buylist"
     # print(average_percentage_change)
     average_percentage_change = average_percentage_change.sort_values(ascending=False)
+    # x_axis = average_percentage_change.keys()
+    # print(x_axis)
+    plt.bar(average_percentage_change.keys(),average_percentage_change.values)
+    plt.show()
     if(len(average_percentage_change)>= 10):
         average_percentage_change = average_percentage_change.sort_values(ascending=False)[:concentration]
     else:
@@ -37,12 +42,14 @@ def main():
     # Concentration is always less than 10
     start = 0
     current_stock = []
-    for i in range(30,250,30):
-        if BUDGET < 100/(PERIOD):
-            break
-        buylist = buy_list(df= df,budget = 100/(PERIOD), start_date= start , end_date=i , concentration= 3)
-        start += 30
-        BUDGET -= 100/(PERIOD)
-        buy_and_sell(current_stock, buylist)
-    print(current_stock)
+    # for i in range(30,250,30):
+    #     if BUDGET < 100/(PERIOD):
+    #         break
+    #     buylist = buy_list(df= df,budget = 100/(PERIOD), start_date= start , end_date=i , concentration= 3)
+    #     start += 30
+    #     BUDGET -= 100/(PERIOD)
+    #     buy_and_sell(current_stock, buylist)
+    # print(current_stock)
+    buylist = buy_list(df= df,budget = 100/(PERIOD), start_date= 0 , end_date=30 , concentration= 3)
+    # print(buylist)
 main()
